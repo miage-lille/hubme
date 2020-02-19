@@ -253,3 +253,22 @@ Pour tester en local (voir scripts dans package.json) :
 1. `npm run build` : rebuild `src/**/*.re` -> `src/**/*.bs.js`
 2. `npm run bundle` : bundle `src/**/*.bs.js` -> `bundleOutput/index.js`
 3. `npm start` : démarre le server qui sert `bundleOutput/index.html`
+
+##### Développer des composants
+
+Quand on développe des composants, il est très pratique de pouvoir les visualiser indépendemment de l'application. Je vous met à disposition [storybook](https://storybook.js.org/) pour cela.
+
+- `npm run storybook` démarre un serveur storybook sur le port 6006
+
+Je vous ai configuré des stories pour visualiser les composants de ce TP. Vous pouvez jouer avec les propriétés des composants depuis storybook grâce à l'[addon knobs](https://github.com/storybookjs/storybook/tree/master/addons/knobs)
+
+Ce TP est un premier tour d'horizon du développement d'une application front-end de type Single Page Application et orientée composant. Pour avoir un flux de développement fluide, je vous recommande deux pratiques que nous n'avons pas mis en oeuvre ici, mais très simple :
+
+1. Intégrer le style dans le composant plutôt que dans la cascade CSS, afin de pouvoir valider son rendu dans storybook. [Comment faire avec ReasonReact ?](https://reasonml.github.io/reason-react/docs/en/style)
+
+2. Séparer vos composants en :
+
+- composants de rendu, c'est-à-dire qui ne gère que de l'affichage à partir de données issues des propriétés du composant.
+- composant **container** de données, c'est-à-dire qui s'occupe de récupérer les données depuis le contexte ou une API pour les fournir en propriétés de composants de rendu.
+
+C'est l'approche proposé dans la correction avec le composants de rendu `Profile` et le composant container `Github`.

@@ -3,13 +3,16 @@
   "version": "0.1.0",
   "scripts": {
     "start": "node server",
-    "build": "bsb -make-world",
+    "build": "bsb -clean-world && bsb -make-world",
+    "buildw": "bsb -clean-world && bsb -make-world -w",
     "dev": "concurrently -c magenta,cyan \"npm:watch\" \"npm:server\"",
     "watch": "bsb -make-world -w -ws _ ",
     "clean": "bsb -clean-world",
     "bundle": "webpack",
-    "server": "moduleserve ./ --port 8000 --spa",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "server": "moduleserve ./ --port 8000 ",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "keywords": [
     "BuckleScript",
@@ -35,6 +38,12 @@
     "@babel/preset-env": "^7.8.4",
     "@babel/preset-react": "^7.8.3",
     "@baransu/graphql_ppx_re": "^0.6.4",
+    "@storybook/addon-actions": "^5.3.13",
+    "@storybook/addon-knobs": "^5.3.13",
+    "@storybook/addon-links": "^5.3.13",
+    "@storybook/addons": "^5.3.13",
+    "@storybook/cli": "^5.3.13",
+    "@storybook/react": "^5.3.13",
     "babel-loader": "^8.0.6",
     "bs-platform": "^6.2.1",
     "concurrently": "^5.1.0",
