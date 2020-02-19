@@ -271,4 +271,4 @@ Ce TP est un premier tour d'horizon du développement d'une application front-en
 - composants de rendu, c'est-à-dire qui ne gère que de l'affichage à partir de données issues des propriétés du composant.
 - composant **container** de données, c'est-à-dire qui s'occupe de récupérer les données depuis le contexte ou une API pour les fournir en propriétés de composants de rendu.
 
-C'est l'approche proposé dans la correction avec le composants de rendu `Profile` et le composant container `Github`.
+C'est l'approche proposée dans la correction avec le composants de rendu `Profile` et le composant container `Github`.
