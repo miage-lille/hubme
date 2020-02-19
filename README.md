@@ -207,3 +207,49 @@ Créez un nouveau composant qui affiche votre nom, avatar,votre status, votre no
 ###### EXERCICE 4 (mutation) :
 
 Créez un nouveau composant qui permette de modifier votre status Github depuis un champ de saisie.
+
+##### SETUP
+
+1. Install ReasonUrql :
+
+- `npm i reason-urql bs-fetch`
+- `npm i -D @baransu/graphql_ppx_re`
+
+2. Update **bsconfig.json** :
+
+```json
+...
+  "bs-dependencies": ["reason-react", "reason-urql"],
+  "ppx-flags": ["@baransu/graphql_ppx_re/ppx6"],
+...
+```
+
+3. Generate the schema of github api
+
+- `npx get-graphql-schema https://api.github.com/graphql -h 'Authorization=Bearer mytoken' -j > graphql_schema.json`
+
+4. Rebuild
+
+- `npx bsb -clean-world`
+- `npx bsb -make-world`
+
+##### Mettre en production
+
+Nous avons travaillé avec `moduleserve` en développement, un serveur de développement bien pratique quand on travaille sur une SPA. Ce serveur n'est pas destiné à être utilisé en production. Vous avez d'ailleurs identifié une limite quand vous avez eu besoin d'utiliser votre token Github, vous avez du l'exposer dans votre code, ce qui induit une faille de sécurité si vous comittez en l'état.
+
+Pour mettre en production une SPA, vous pouvez devez générer un asset statique, pour cela j'utilise [Webpack](https://webpack.js.org/) qui est pré-configuré ici, vous remarquerez que j'utilise également [babeljs](https://babeljs.io/) dont rôle est de transpiler le code javascript vers un code qui garantie une compatibilité avec la majorité des navigateurs.
+
+Avec Webpack, il est possible d'utiliser le plugin dotenv qui injectera le contenu d'un fichier `.env` dans votre page. Ca vous permet de tester avec votre token, sans le commiter. Dans une application réelle, le token de production serait probablement injecté par une variable d'environnement présente dans la CI/CD.
+
+> Babel est nécessaire car nous utilisons les modules commonjs. Nous pourrions nous en passer en ciblant les modules es6, pour cela il suffit de remplacer dans **bsconfig.json** la ligne `"module": "commonjs,"` par `"module": "es6,"`. Cependant à date de ce TP la compatibilité des navigateurs avec les modules es6 reste jeune, c'est pourquoi je préfère encore utiliser babel.
+
+Pour déployer vous avez le choix entre :
+
+- Soit un hébergement statique, type Github pages, auquel cas il suffit de pousser le contenu du répertoir `bundleOutput`
+- Soit déployer vous même un serveur statique. Je vous fourni un code d'exemple avec un serveur codé avec **express** dans `server/index.js`
+
+Pour tester en local (voir scripts dans package.json) :
+
+1. `npm run build` : rebuild `src/**/*.re` -> `src/**/*.bs.js`
+2. `npm run bundle` : bundle `src/**/*.bs.js` -> `bundleOutput/index.js`
+3. `npm start` : démarre le server qui sert `bundleOutput/index.html`

@@ -27,22 +27,5 @@ let makeContainer = text => {
   content;
 };
 
-// All 4 examples.
-ReactDOMRe.render(<Greeting />, makeContainer("Atomic Greeting"));
-
-ReactDOMRe.render(
-  <BlinkingGreeting> {React.string("Hello!")} </BlinkingGreeting>,
-  makeContainer("Blinking Greeting"),
-);
-
-ReactDOMRe.render(
-  <ReducerFromReactJSDocs />,
-  makeContainer("Reducer From ReactJS Docs"),
-);
-
-ReactDOMRe.render(
-  <FetchedDogPictures />,
-  makeContainer("Fetched Dog Pictures"),
-);
-
-ReactDOMRe.render(<FetchRandomDog />, makeContainer("1 random Dog"));
+// Mount application
+ReactDOMRe.render(<Application />, makeContainer("My amazing website"));

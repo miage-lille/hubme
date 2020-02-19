@@ -5,6 +5,20 @@ type state =
   | ErrorFetchingDogs
   | LoadedDogs(array(string));
 
+let fetchRandomDog = setter =>
+  Js.Promise.(
+    fetch("https://dog.ceo/api/breeds/image/random/1")
+    |> then_(response => response##json())
+    |> then_(jsonResponse => {
+         setter(_previousState => LoadedDogs(jsonResponse##message));
+         Js.Promise.resolve();
+       })
+    |> catch(_err => {
+         setter(_previousState => ErrorFetchingDogs);
+         Js.Promise.resolve();
+       })
+    |> ignore
+  );
 [@react.component]
 let make = () => {
   let (state, setState) = React.useState(() => LoadingDogs);
@@ -12,19 +26,7 @@ let make = () => {
   // Notice that instead of `useEffect`, we have `useEffect0`. See
   // reasonml.github.io/reason-react/docs/en/components#hooks for more info
   React.useEffect0(() => {
-    Js.Promise.(
-      fetch("https://dog.ceo/api/breeds/image/random/1")
-      |> then_(response => response##json())
-      |> then_(jsonResponse => {
-           setState(_previousState => LoadedDogs(jsonResponse##message));
-           Js.Promise.resolve();
-         })
-      |> catch(_err => {
-           setState(_previousState => ErrorFetchingDogs);
-           Js.Promise.resolve();
-         })
-      |> ignore
-    );
+    fetchRandomDog(setState);
 
     // Returning None, instead of Some(() => ...), means we don't have any
     // cleanup to do before unmounting. That's not 100% true. We should
@@ -68,6 +70,8 @@ let make = () => {
          ->React.array
        }}
     </div>
-    <button> {React.string("New dog")} </button>
+    <button onClick={_ => fetchRandomDog(setState)}>
+      {React.string("New dog")}
+    </button>
   </>;
 };

@@ -23,10 +23,17 @@ let style = {j|
     background-color: $reasonReactBlue;
     color: white;
   }
+  button:hover {
+    cursor: pointer
+  }
+  .selected {
+    background-color: $reasonReactBlue;
+    color: white;
+  }
   .container {
     margin: 12px 0px;
     box-shadow: 0px 4px 16px rgb(200, 200, 200);
-    width: 720px;
+    width: 1080px;
     border-radius: 12px;
     font-family: sans-serif;
   }
@@ -40,5 +47,8 @@ let style = {j|
     background-color: white;
     padding: 16px;
     border-radius: 0px 0px 12px 12px;
+  }
+  .content {
+        padding: 12px;
   }
 |j};

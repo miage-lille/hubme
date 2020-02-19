@@ -4,5 +4,6 @@
 npm-debug.log
 /lib/bs/
 /node_modules/
-/bundleOutput/
+/bundleOutput/*.js
 *.bs.js
+.graphql_ppx_cache
